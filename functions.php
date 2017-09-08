@@ -16,7 +16,7 @@ function add_laundry_menu() {
 }
 
 function dasboard_laundry() {
-	echo 'dasboard_laundry';
+    include 'template/laporan-laundry.php';
 }
 
 function harga_laundry() {
@@ -24,11 +24,11 @@ function harga_laundry() {
 }
 
 function transaksi_laundry() {
-    echo 'transaksi_laundry';
+    include 'template/transaksi-laundry.php';
 }
 
 function transaksi_karyawan() {
-    echo 'transaksi_karyawan';
+    include 'template/transaksi-karyawan.php';
 }
 
 function settings_laundry() {
