@@ -29,3 +29,10 @@ register_activation_hook( __FILE__, 'insert_default_value_laundry' );
 register_activation_hook( __FILE__, 'add_role_laundry' );
 
 add_action( 'wp_ajax_input-harga-lama-service', 'input_harga_service' );
+add_action( 'wp_ajax_ac-input-persentase', 'input_persentase' );
+add_action( 'wp_ajax_update-bagi-hasil', 'update_bagi_hasil' );
+add_action( 'wp_ajax_update-parfum-laundry', 'update_parfum_laundry' );
+add_action( 'wp_ajax_update-tipe-laundry', 'update_tipe_laundry' );
+add_action( 'wp_ajax_update-lama-service', 'update_lama_service' );
+add_action( 'wp_ajax_update-jenis-pekerjaan', 'update_jenis_pekerjaan' );
+add_action( 'wp_ajax_update-diskon-laundry', 'update_diskon_laundry' );
