@@ -188,6 +188,25 @@ function insert_default_value_laundry(){
     $wpdb->insert( $wpdb->prefix."parfum_laundry", array( 'nama' => 'Biasa / Terserah / Seperti yang dulu' ) );
     $wpdb->insert( $wpdb->prefix."parfum_laundry", array( 'nama' => 'Ofresh' ) );
     $wpdb->insert( $wpdb->prefix."parfum_laundry", array( 'nama' => 'Sakura' ) );
+
+    $wpdb->insert( $wpdb->prefix."harga_service_laundry", array( 
+        'tipe_laundry' => 1,
+        'lama_service' => 1,
+        'harga' => 4000, 
+        'satuan' => 'kg' 
+    ) );
+    $wpdb->insert( $wpdb->prefix."harga_service_laundry", array( 
+        'tipe_laundry' => 1,
+        'lama_service' => 2,
+        'harga' => 5000, 
+        'satuan' => 'kg' 
+    ) );
+    $wpdb->insert( $wpdb->prefix."harga_service_laundry", array( 
+        'tipe_laundry' => 1,
+        'lama_service' => 3,
+        'harga' => 8000, 
+        'satuan' => 'kg' 
+    ) );
 	
     $wpdb->insert( $wpdb->prefix."persentase_laundry", array( 
         'tipe_laundry' => 1, 
