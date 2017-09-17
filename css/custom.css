@@ -1,0 +1,10 @@
+.harga-laundry .table tbody tr td {
+	text-align: right;
+}
+.harga-laundry .table tbody tr td:nth-child(2) {
+	text-align: left;
+}
+.harga-laundry .table th, .harga-laundry .table tr td:first-child, .harga-laundry .table tr td:last-child{
+	text-align: center;
+	vertical-align: middle;
+}
