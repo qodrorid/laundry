@@ -543,3 +543,25 @@ function update_diskon_laundry() {
 function f_uang($uang){
     return 'Rp '.number_format($uang, 2, ',', '.');
 }
+
+function get_user_laundry($options){
+    $args = array(
+        'role'         => $options['role'],
+        'orderby'      => 'display_name',
+        'order'        => 'ASC',
+        'fields'       => array('ID', 'display_name')
+    );
+    $users = get_users( $args );
+    $newUsers = array();
+    foreach ($users as $user) {
+        $alamat = get_usermeta($user->ID, 'alamat');
+        $no_hp = get_usermeta($user->ID, 'no_hp');
+        $newUsers[] = array(
+            'id'    => $user->ID,
+            'display_name'  => $user->display_name,
+            'no_hp' => $no_hp,
+            'alamat'    => $alamat
+        );
+    }
+    return $newUsers;
+}

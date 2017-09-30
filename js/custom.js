@@ -209,3 +209,9 @@ jQuery('#input-diskon-laundry').on('click', function(e){
 		}
 	})
 });
+
+jQuery('.chosen-select').chosen({width: '100%'}).on('chosen:no_results', function(event, data){
+  console.log(data.chosen.get_search_text());
+});
+
+jQuery('#datetimepicker1').datetimepicker();

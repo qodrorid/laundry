@@ -7,9 +7,9 @@
 	$parfum_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'parfum_laundry', ARRAY_A );
 	$diskon_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'diskon_laundry', ARRAY_A );
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css">
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css"/>
 <div class="container">
 	<div class="row"><h1>Settings Laundry</h1></div>
 	<div class="panel-group" id="accordion-laundry" role="tablist" aria-multiselectable="true">
