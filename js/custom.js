@@ -210,8 +210,33 @@ jQuery('#input-diskon-laundry').on('click', function(e){
 	})
 });
 
+jQuery('#input-transaksi-customer').on('click', function(e){
+	e.preventDefault();
+	var customer_laundry = jQuery('#customer-laundry').val();
+	if(!customer_laundry)
+		return swal({ title: 'Customer Laundry belum diisi!', type: 'error'});
+	jQuery.ajax({
+		url: ajaxurl,
+		type: 'POST',
+		data: {
+			action: 'input-transaksi-customer',
+			customer_laundry: customer_laundry,
+		},
+		success: function(respone){
+			var data = JSON.parse(respone);
+			if(data.error){
+				swal({ title: data.msg, type: 'error' });
+			}else{
+				swal({ title: data.msg, type: 'success' });
+			}
+		}
+	})
+});
+
 jQuery('.chosen-select').chosen({width: '100%'}).on('chosen:no_results', function(event, data){
   console.log(data.chosen.get_search_text());
 });
 
 jQuery('#datetimepicker1').datetimepicker();
+
+jQuery('#datetimepicker2').datetimepicker();

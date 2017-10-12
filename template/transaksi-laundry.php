@@ -10,7 +10,7 @@
 	$diskon_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'diskon_laundry', ARRAY_A );
 	$tipe = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'tipe_laundry', ARRAY_A );
 	$lama_service = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'lama_service_laundry', ARRAY_A );
-    // echo "<pre>".print_r($customers, 1)."</pre>";
+    // echo "<pre>".print_r($tipe, 1)."</pre>";
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css">
@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/chosen.css">
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css">
 <div class="container">
 	<div class="row"><h1>Transaksi Customer Laundry</h1></div>
 	<div class="panel-group" id="accordion-laundry" role="tablist" aria-multiselectable="true">
@@ -33,11 +34,11 @@
 		      	<div class="panel-body">
 					<div class="row">
 						<div class="col-md-6">
-							<form>
+							<form method="POST">
 							  	<div class="form-group">
 								    <label for="customer-laundry">Nama Customer</label>
 								    <select id="customer-laundry" class="form-control chosen-select">
-								    	<option>Pilih Customer</option>
+								    	<option value="">Pilih Customer</option>
 								    <?php
 								    	foreach ($customers as $customer) {
 								    		echo '<option value="'.$customer['id'].'">'.$customer['display_name'].' | '.$customer['alamat'].' | '.$customer['no_hp'].'</option>';
@@ -67,7 +68,7 @@
 								</div>
 							  	<div class="form-group">
 								    <label for="waktu-keluar-laundry">Waktu Keluar</label>
-					                <div class='input-group date' id='datetimepicker1'>
+					                <div class='input-group date' id='datetimepicker2'>
 					                    <input type='text' class="form-control" id="waktu-keluar-laundry" placeholder="Waktu Keluar Laundry"/>
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
@@ -93,11 +94,29 @@
 							  	</div>
 							  	<div class="form-group">
 								    <label for="tipe-laundry">Tipe Laundry</label>
-								    <input type="text" class="form-control" id="tipe-laundry" placeholder="Tipe Laundry">
+								    <select class="form-control" id="tipe-laundry">
+								    	<option value="">Select Tipe Laundry</option>
+								    <?php
+								    	if(!empty($tipe)){
+											foreach ($tipe as $k => $v){
+												echo '<option value="'.$v['id'].'">'.$v['nama'].'</option>';
+											}
+								    	}
+									?>
+								    </select>
 							  	</div>
 							  	<div class="form-group">
 								    <label for="lama-service-laundry">Lama Service Laundry</label>
-								    <input type="text" class="form-control" id="lama-service-laundry" placeholder="Lama Service Laundry">
+								    <select class="form-control" id="lama-service-laundry">
+								    	<option value="">Select Lama Service Laundry</option>
+								    <?php
+								    	if(!empty($lama_service)){
+											foreach ($lama_service as $k => $v){
+												echo '<option value="'.$v['id'].'">'.$v['nama'].'</option>';
+											}
+								    	}
+									?>
+								    </select>
 							  	</div>
 							  	<div class="form-group">
 								    <label for="berat-laundry">Berat Laundry</label>
@@ -109,13 +128,29 @@
 							  	</div>
 							  	<div class="form-group">
 								    <label for="diskon-laundry">Diskon Laundry</label>
-								    <input type="text" class="form-control" id="diskon-laundry" placeholder="Diskon Laundry">
+								    <select class="form-control" id="diskon-laundry">
+								    	<option value="">Select Diskon Laundry</option>
+								    <?php
+								    	if(!empty($diskon_laundry)){
+											foreach ($diskon_laundry as $k => $v){
+												$satuan = '';
+												if($v['tipe'] == 'persen'){
+													$satuan = '%';
+												}
+												echo '<option value="'.$v['id'].'" data-value="'.$v['nilai_diskon'].'" data-type="'.$v['tipe'].'">'.$v['nilai_diskon'].$satuan.' ('.$v['keterangan'].')</option>';
+											}
+								    	}
+									?>
+								    </select>
 							  	</div>
 							  	<div class="form-group">
 								    <label for="status-laundry">Status Laundry</label>
-								    <input type="text" class="form-control" id="status-laundry" placeholder="Status Laundry">
+								    <select class="form-control" id="status-laundry">
+								    	<option value="proses">Proses</option>
+								    	<option value="selesai">Selesai</option>
+								    </select>
 							  	</div>
-							  	<button type="submit" class="btn btn-primary" id="input-tipe-laundry">Submit</button>
+							  	<button type="submit" class="btn btn-primary" id="input-transaksi-customer">Submit</button>
 							</form>
 						</div>
 					</div>

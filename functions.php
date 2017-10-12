@@ -565,3 +565,13 @@ function get_user_laundry($options){
     }
     return $newUsers;
 }
+
+function input_transaksi_customer(){
+    global $wpdb;
+    $ret = array( 'error' => true, 'msg' => 'Error, harap hubungi admin!' );
+    if(!empty($_POST)){
+
+    }
+    echo json_encode($ret);
+    wp_die();
+}
