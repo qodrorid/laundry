@@ -8,3 +8,11 @@
 	text-align: center;
 	vertical-align: middle;
 }
+#customer_laundry_chosen .no-results {
+	cursor: pointer;
+	color: #000;
+}
+#customer_laundry_chosen .no-results:hover {
+	background: #3875d7;
+	color: #fff;
+}

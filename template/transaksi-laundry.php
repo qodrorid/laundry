@@ -5,11 +5,15 @@
 	}
 	global $wpdb;
 	$customers = get_user_laundry(array( 'role' => 'customer' ));
-	$pekerja = get_user_laundry(array( 'role' => 'pekerja' ));
+	$pekerja = get_user_laundry(array( 'role' => array('pekerja', 'administrator') ));
 	$parfum_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'parfum_laundry', ARRAY_A );
 	$diskon_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'diskon_laundry', ARRAY_A );
 	$tipe = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'tipe_laundry', ARRAY_A );
 	$lama_service = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'lama_service_laundry', ARRAY_A );
+	$user = wp_get_current_user();
+	$default_lama_laundry = get_option('lama_laundry', false);
+	$default_tipe_laundry = get_option('tipe_laundry', false);
+	$default_parfum_laundry = get_option('parfum_laundry', false);
     // echo "<pre>".print_r($tipe, 1)."</pre>";
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css">
@@ -25,12 +29,12 @@
 	  	<div class="panel panel-default">
 		    <div class="panel-heading" role="tab" id="ac-header-transkasi-laundry">
 		      	<h4 class="panel-title">
-			        <a role="button" data-toggle="collapse" data-parent="#accordion-laundry" href="#ac-transkasi-laundry" aria-expanded="false" aria-controls="ac-transkasi-laundry">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion-laundry" href="#ac-transkasi-laundry" aria-expanded="true" aria-controls="ac-transkasi-laundry">
 			          Manage Transaksi Laundry
 			        </a>
 		      	</h4>
 		    </div>
-		    <div id="ac-transkasi-laundry" class="panel-collapse collapse" role="tabpanel" aria-labelledby="ac-header-transkasi-laundry">
+		    <div id="ac-transkasi-laundry" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="ac-header-transkasi-laundry">
 		      	<div class="panel-body">
 					<div class="row">
 						<div class="col-md-6">
@@ -47,14 +51,58 @@
 								    </select>
 							  	</div>
 							  	<div class="form-group">
-								    <label for="pekerja-laundry">Pekerja Laundry</label>
-								    <select id="pekerja-laundry" class="form-control chosen-select">
-								    	<option>Pilih Pekerja</option>
+								    <label for="tipe-laundry">Tipe Laundry</label>
+								    <select class="form-control" id="tipe-laundry">
+								    	<option value="">Select Tipe Laundry</option>
 								    <?php
-								    	foreach ($pekerja as $karyawan) {
-								    		echo '<option value="'.$karyawan['id'].'">'.$karyawan['display_name'].' | '.$karyawan['alamat'].' | '.$karyawan['no_hp'].'</option>';
+								    	if(!empty($tipe)){
+											foreach ($tipe as $k => $v){
+												$selected = '';
+												if($default_tipe_laundry == $v['id']){
+													$selected = 'selected';
+												}
+												echo '<option value="'.$v['id'].'" '.$selected.'>'.$v['nama'].'</option>';
+											}
 								    	}
-								    ?>
+									?>
+								    </select>
+							  	</div>
+							  	<div class="form-group">
+								    <label for="lama-service-laundry">Lama Service Laundry</label>
+								    <select class="form-control" id="lama-service-laundry">
+								    	<option value="">Select Lama Service Laundry</option>
+								    <?php
+								    	if(!empty($lama_service)){
+											foreach ($lama_service as $k => $v){
+												$selected = '';
+												if($default_lama_laundry == $v['id']){
+													$selected = 'selected';
+												}
+												echo '<option value="'.$v['id'].'" '.$selected.'>'.$v['nama'].'</option>';
+											}
+								    	}
+									?>
+								    </select>
+							  	</div>
+							  	<div class="form-group">
+								    <label for="berat-laundry">Berat Laundry</label>
+								    <input type="text" class="form-control" id="berat-laundry" placeholder="Berat Laundry" value="0">
+							  	</div>
+							  	<div class="form-group">
+								    <label for="parfum-laundry">Parfum Laundry</label>
+								    <select class="form-control" id="parfum-laundry">
+								    	<option value="">Select Parfum Laundry</option>
+								    <?php
+								    	if(!empty($parfum_laundry)){
+											foreach ($parfum_laundry as $k => $v){
+												$selected = '';
+												if($default_parfum_laundry == $v['id']){
+													$selected = 'selected';
+												}
+												echo '<option value="'.$v['id'].'" '.$selected.'>'.$v['nama'].'</option>';
+											}
+								    	}
+									?>
 								    </select>
 							  	</div>
 							  	<div class="form-group">
@@ -76,55 +124,23 @@
 					                </div>
 							  	</div>
 							  	<div class="form-group">
-								    <label for="parfum-laundry">Parfum Laundry</label>
-								    <select class="form-control" id="parfum-laundry">
-								    	<option value="">Select Parfum Laundry</option>
+								    <label for="pekerja-laundry">Pekerja Laundry</label>
+								    <select id="pekerja-laundry" class="form-control chosen-select">
+								    	<option>Pilih Pekerja</option>
 								    <?php
-								    	if(!empty($parfum_laundry)){
-											foreach ($parfum_laundry as $k => $v){
-												echo '<option value="'.$v['id'].'">'.$v['nama'].'</option>';
-											}
+								    	foreach ($pekerja as $karyawan) {
+								    		$selected = '';
+								    		if($user->ID == $karyawan['id']){
+								    			$selected = 'selected';
+								    		}
+								    		echo '<option value="'.$karyawan['id'].'" '.$selected.'>'.$karyawan['display_name'].' | '.$karyawan['alamat'].' | '.$karyawan['no_hp'].'</option>';
 								    	}
-									?>
+								    ?>
 								    </select>
 							  	</div>
 							  	<div class="form-group">
 								    <label for="keterangan-laundry">Keterangan Laundry</label>
 								    <input type="text" class="form-control" id="keterangan-laundry" placeholder="Keterangan Laundry">
-							  	</div>
-							  	<div class="form-group">
-								    <label for="tipe-laundry">Tipe Laundry</label>
-								    <select class="form-control" id="tipe-laundry">
-								    	<option value="">Select Tipe Laundry</option>
-								    <?php
-								    	if(!empty($tipe)){
-											foreach ($tipe as $k => $v){
-												echo '<option value="'.$v['id'].'">'.$v['nama'].'</option>';
-											}
-								    	}
-									?>
-								    </select>
-							  	</div>
-							  	<div class="form-group">
-								    <label for="lama-service-laundry">Lama Service Laundry</label>
-								    <select class="form-control" id="lama-service-laundry">
-								    	<option value="">Select Lama Service Laundry</option>
-								    <?php
-								    	if(!empty($lama_service)){
-											foreach ($lama_service as $k => $v){
-												echo '<option value="'.$v['id'].'">'.$v['nama'].'</option>';
-											}
-								    	}
-									?>
-								    </select>
-							  	</div>
-							  	<div class="form-group">
-								    <label for="berat-laundry">Berat Laundry</label>
-								    <input type="text" class="form-control" id="berat-laundry" placeholder="Berat Laundry">
-							  	</div>
-							  	<div class="form-group">
-								    <label for="total-harga-laundry">Total Harga Laundry</label>
-								    <input type="text" class="form-control" id="total-harga-laundry" placeholder="Total Harga Laundry">
 							  	</div>
 							  	<div class="form-group">
 								    <label for="diskon-laundry">Diskon Laundry</label>
@@ -150,8 +166,18 @@
 								    	<option value="selesai">Selesai</option>
 								    </select>
 							  	</div>
+							  	<div class="form-group" style="display:none">
+								    <label for="total-harga-laundry">Total Harga Laundry</label>
+								    <input type="text" class="form-control" id="total-harga-laundry" placeholder="Total Harga Laundry" value="0">
+							  	</div>
 							  	<button type="submit" class="btn btn-primary" id="input-transaksi-customer">Submit</button>
 							</form>
+						</div>
+						<div class="col-md-6">
+							<div id="layout-transaksi-laundry" class="text-center">
+								<h3>Total</h3>
+								<h3 id="total-laundry">Rp 0</h3>
+							</div>
 						</div>
 					</div>
 		      	</div>
@@ -159,6 +185,15 @@
 	  	</div>
 	</div>
 </div>
+<?php
+	$harga_service_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'harga_service_laundry', ARRAY_A );
+?>
+<script>
+	var lama_service = <?php echo json_encode($lama_service); ?>;
+	var diskon_laundry = <?php echo json_encode($diskon_laundry); ?>;
+	var harga_service_laundry = <?php echo json_encode($harga_service_laundry); ?>;
+	var add_new_user = "<?php echo get_admin_url(); ?>user-new.php";
+</script>
 <script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap.min.js"></script>
 <script src="<?php echo plugins_url('laundry'); ?>/js/sweetalert.js"></script>
 <script src="<?php echo plugins_url('laundry'); ?>/js/chosen.jquery.min.js"></script>

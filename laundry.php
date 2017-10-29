@@ -37,3 +37,6 @@ add_action( 'wp_ajax_update-lama-service', 'update_lama_service' );
 add_action( 'wp_ajax_update-jenis-pekerjaan', 'update_jenis_pekerjaan' );
 add_action( 'wp_ajax_update-diskon-laundry', 'update_diskon_laundry' );
 add_action( 'wp_ajax_input-transaksi-customer', 'input_transaksi_customer' );
+add_action( 'wp_ajax_set-general-setting', 'set_general_setting' );
+
+add_action( 'admin_enqueue_scripts', 'load_custom_script_admin' );

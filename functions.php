@@ -546,11 +546,15 @@ function f_uang($uang){
 
 function get_user_laundry($options){
     $args = array(
-        'role'         => $options['role'],
         'orderby'      => 'display_name',
         'order'        => 'ASC',
         'fields'       => array('ID', 'display_name')
     );
+    if(is_array($options['role'])){
+        $args['role__in'] = $options['role'];
+    }else{
+        $args['role'] = $options['role'];
+    }
     $users = get_users( $args );
     $newUsers = array();
     foreach ($users as $user) {
@@ -574,4 +578,34 @@ function input_transaksi_customer(){
     }
     echo json_encode($ret);
     wp_die();
+}
+
+function set_general_setting(){
+    global $wpdb;
+    $ret = array( 'error' => true, 'msg' => 'Error, harap hubungi admin!' );
+    if(!empty($_POST)){
+        $check = true;
+        if(!empty($_POST['lama_laundry'])){
+            update_option('lama_laundry', $_POST['lama_laundry']);
+        }
+        if(!empty($_POST['default_tipe_laundry'])){
+            update_option('tipe_laundry', $_POST['default_tipe_laundry']);
+        }
+        if(!empty($_POST['default_parfum_laundry'])){
+            update_option('parfum_laundry', $_POST['default_parfum_laundry']);
+        }
+        if($check){
+            $ret['error'] = false;
+            $ret['msg'] = 'Berhasil disimpan!';
+        }
+    }
+    echo json_encode($ret);
+    wp_die();
+}
+
+function load_custom_script_admin($hook) {
+    if ( 'user-new.php' != $hook ) {
+        return;
+    }
+    wp_enqueue_script( 'laundry_custom_script', plugin_dir_url( __FILE__ ) . '/js/global.js', array( 'jquery' ) );
 }
