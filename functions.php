@@ -100,6 +100,7 @@ function laundry_install() {
         berat int(11) NOT NULL,
         harga int(11) NOT NULL,
         diskon int(11) NOT NULL,
+        tambahan_harga int(11) NOT NULL,
         status varchar(100) DEFAULT '' NOT NULL,
         PRIMARY KEY  (id)
     ) $charset_collate;";
@@ -572,9 +573,70 @@ function get_user_laundry($options){
 
 function input_transaksi_customer(){
     global $wpdb;
-    $ret = array( 'error' => true, 'msg' => 'Error, harap hubungi admin!' );
+    $ret = array( 'error' => true );
     if(!empty($_POST)){
-
+        if(empty($_POST['customer_laundry'])){
+            $ret['msg'] = 'Customer Laundry kosong!';
+        }
+        if(empty($_POST['tipe_laundry'])){
+            $ret['msg'] = 'Tipe Diskon Laundry kosong!';
+        }
+        if(empty($_POST['lama_service_laundry'])){
+            $ret['msg'] = 'Lama Service Laundry kosong!';
+        }
+        if(empty($_POST['berat_laundry'])){
+            $ret['msg'] = 'Berat Laundry kosong!';
+        }
+        if(empty($_POST['parfum_laundry'])){
+            $ret['msg'] = 'Parfum Laundry kosong!';
+        }
+        if(empty($_POST['waktu_masuk_laundry'])){
+            $ret['msg'] = 'Waktu Masuk Laundry kosong!';
+        }
+        if(empty($_POST['waktu_keluar_laundry'])){
+            $ret['msg'] = 'Waktu Keluar Laundry kosong!';
+        }
+        if(empty($_POST['pekerja_laundry'])){
+            $ret['msg'] = 'Pekerjaan Laundry kosong!';
+        }
+        if(empty($_POST['total_laundry'])){
+            $ret['msg'] = 'Total Laundry kosong!';
+        }
+        if(empty($_POST['keterangan_laundry'])){
+            $ret['msg'] = 'Keterangan Laundry kosong!';
+        }
+        if(empty($_POST['status_laundry'])){
+            $ret['msg'] = 'Status Laundry kosong!';
+        }
+        $date_in=date_create($_POST['waktu_masuk_laundry']);
+        $date_out=date_create($_POST['waktu_keluar_laundry']);
+        if(empty($ret['msg'])){
+            $data = array(
+                'customer_id' => $_POST['customer_laundry'],
+                'pekerja_id' => $_POST['pekerja_laundry'],
+                'waktu_masuk' => date_format($date_in,"Y-m-d H:i:s"),
+                'waktu_keluar' => date_format($date_out,"Y-m-d H:i:s"),
+                'parfum_id' => $_POST['parfum_laundry'],
+                'keterangan' => $_POST['keterangan_laundry'],
+                'tipe_laundry' => $_POST['tipe_laundry'],
+                'lama_service' => $_POST['lama_service_laundry'],
+                'berat' => $_POST['berat_laundry'],
+                'harga' => $_POST['total_laundry'],
+                'status' => $_POST['status_laundry'],
+            );
+            if(empty($_POST['diskon_laundry'])){
+                $data['diskon'] = $_POST['diskon_laundry'];
+            }
+            if(empty($_POST['tambahan_harga_laundry'])){
+                $data['tambahan_harga'] = $_POST['tambahan_harga_laundry'];
+            }
+            $wpdb->insert($wpdb->prefix.'transaksi_laundry', $data);
+            $ret['msg'] = 'Success insert transaksi laundry!';
+            $ret['error'] = false;
+        }
+    }
+    if($ret['error'] && empty($ret['msg'])){
+        $ret['msg'] = 'Error, harap hubungi admin!';
     }
     echo json_encode($ret);
     wp_die();

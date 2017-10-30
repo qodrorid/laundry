@@ -86,7 +86,7 @@
 							  	</div>
 							  	<div class="form-group">
 								    <label for="berat-laundry">Berat Laundry</label>
-								    <input type="text" class="form-control" id="berat-laundry" placeholder="Berat Laundry" value="0">
+								    <input type="number" class="form-control" id="berat-laundry" placeholder="Berat Laundry" value="0">
 							  	</div>
 							  	<div class="form-group">
 								    <label for="parfum-laundry">Parfum Laundry</label>
@@ -124,19 +124,8 @@
 					                </div>
 							  	</div>
 							  	<div class="form-group">
-								    <label for="pekerja-laundry">Pekerja Laundry</label>
-								    <select id="pekerja-laundry" class="form-control chosen-select">
-								    	<option>Pilih Pekerja</option>
-								    <?php
-								    	foreach ($pekerja as $karyawan) {
-								    		$selected = '';
-								    		if($user->ID == $karyawan['id']){
-								    			$selected = 'selected';
-								    		}
-								    		echo '<option value="'.$karyawan['id'].'" '.$selected.'>'.$karyawan['display_name'].' | '.$karyawan['alamat'].' | '.$karyawan['no_hp'].'</option>';
-								    	}
-								    ?>
-								    </select>
+								    <label for="tambahan-harga-laundry">Tambahan Harga Laundry</label>
+								    <input type="number" class="form-control" id="tambahan-harga-laundry" placeholder="0" value="0">
 							  	</div>
 							  	<div class="form-group">
 								    <label for="keterangan-laundry">Keterangan Laundry</label>
@@ -160,6 +149,21 @@
 								    </select>
 							  	</div>
 							  	<div class="form-group">
+								    <label for="pekerja-laundry">Pekerja Laundry</label>
+								    <select id="pekerja-laundry" class="form-control chosen-select">
+								    	<option>Pilih Pekerja</option>
+								    <?php
+								    	foreach ($pekerja as $karyawan) {
+								    		$selected = '';
+								    		if($user->ID == $karyawan['id']){
+								    			$selected = 'selected';
+								    		}
+								    		echo '<option value="'.$karyawan['id'].'" '.$selected.'>'.$karyawan['display_name'].' | '.$karyawan['alamat'].' | '.$karyawan['no_hp'].'</option>';
+								    	}
+								    ?>
+								    </select>
+							  	</div>
+							  	<div class="form-group">
 								    <label for="status-laundry">Status Laundry</label>
 								    <select class="form-control" id="status-laundry">
 								    	<option value="proses">Proses</option>
@@ -168,15 +172,17 @@
 							  	</div>
 							  	<div class="form-group" style="display:none">
 								    <label for="total-harga-laundry">Total Harga Laundry</label>
-								    <input type="text" class="form-control" id="total-harga-laundry" placeholder="Total Harga Laundry" value="0">
+								    <input type="number" class="form-control" id="total-harga-laundry" placeholder="Total Harga Laundry" value="0">
 							  	</div>
-							  	<button type="submit" class="btn btn-primary" id="input-transaksi-customer">Submit</button>
 							</form>
 						</div>
 						<div class="col-md-6">
 							<div id="layout-transaksi-laundry" class="text-center">
 								<h3>Total</h3>
 								<h3 id="total-laundry">Rp 0</h3>
+								<br>
+								<br>
+							  	<button type="submit" class="btn btn-primary" id="input-transaksi-customer">Submit</button>
 							</div>
 						</div>
 					</div>

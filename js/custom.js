@@ -215,12 +215,54 @@ jQuery('#input-transaksi-customer').on('click', function(e){
 	var customer_laundry = jQuery('#customer-laundry').val();
 	if(!customer_laundry)
 		return swal({ title: 'Customer Laundry belum diisi!', type: 'error'});
+	var tipe_laundry = jQuery('#tipe-laundry').val();
+	if(!tipe_laundry)
+		return swal({ title: 'Tipe Laundry belum diisi!', type: 'error'});
+	var lama_service_laundry = jQuery('#lama-service-laundry').val();
+	if(!lama_service_laundry)
+		return swal({ title: 'Lama Service Laundry belum diisi!', type: 'error'});
+	var berat_laundry = jQuery('#berat-laundry').val();
+	if(!berat_laundry)
+		return swal({ title: 'Berat Laundry belum diisi!', type: 'error'});
+	var parfum_laundry = jQuery('#parfum-laundry').val();
+	if(!parfum_laundry)
+		return swal({ title: 'Parfum Laundry belum diisi!', type: 'error'});
+	var waktu_masuk_laundry = jQuery('#waktu-masuk-laundry').val();
+	if(!waktu_masuk_laundry)
+		return swal({ title: 'Waktu Masuk Laundry belum diisi!', type: 'error'});
+	var waktu_keluar_laundry = jQuery('#waktu-keluar-laundry').val();
+	if(!waktu_keluar_laundry)
+		return swal({ title: 'Waktu Keluar Laundry belum diisi!', type: 'error'});
+	var pekerja_laundry = jQuery('#pekerja-laundry').val();
+	if(!pekerja_laundry)
+		return swal({ title: 'Pekerja Laundry belum diisi!', type: 'error'});
+	var total_laundry = jQuery('#total-harga-laundry').val();
+	if(!total_laundry)
+		return swal({ title: 'Total Harga Laundry belum diisi!', type: 'error'});
+	var keterangan_laundry = jQuery('#keterangan-laundry').val();
+	var diskon_laundry = jQuery('#diskon-laundry').val();
+	var status_laundry = jQuery('#status-laundry').val();
+	var tambahan_harga_laundry = jQuery('#tambahan-harga-laundry').val();
+	if(total_laundry == 0)
+		return swal({ title: 'Total Harga Laundry tidak boleh 0!', type: 'error'});
 	jQuery.ajax({
 		url: ajaxurl,
 		type: 'POST',
 		data: {
 			action: 'input-transaksi-customer',
 			customer_laundry: customer_laundry,
+			tipe_laundry: tipe_laundry,
+			lama_service_laundry: lama_service_laundry,
+			berat_laundry: berat_laundry,
+			parfum_laundry: parfum_laundry,
+			waktu_masuk_laundry: waktu_masuk_laundry,
+			waktu_keluar_laundry: waktu_keluar_laundry,
+			pekerja_laundry: pekerja_laundry,
+			total_laundry: total_laundry,
+			keterangan_laundry: keterangan_laundry,
+			diskon_laundry: diskon_laundry,
+			status_laundry: status_laundry,
+			tambahan_harga_laundry: tambahan_harga_laundry
 		},
 		success: function(respone){
 			var data = JSON.parse(respone);
@@ -281,28 +323,67 @@ jQuery('#datetimepicker1').datetimepicker({
 });
 var result = new Date();
 result.setDate(result.getDate() + 2);
+console.log('result', result);
 jQuery('#datetimepicker2').datetimepicker({
     format: 'DD-MM-YYYY HH:mm:ss',
     date: result
 });
 
+function generateWaktuLaundry(options){
+	var date = new Date();
+	var d = pad(date.getDate());
+  	var m = pad(date.getMonth());
+  	var y = pad(date.getFullYear());
+  	var h = pad(date.getHours());
+	var i = pad(date.getMinutes());
+	var s = pad(date.getSeconds());
+	jQuery("#datetimepicker1 input").val(d+':'+m+':'+y+' '+h+':'+i+':'+s).change();
+
+	var lama_service = 2;
+	if(options.lama_service == '1'){
+		lama_service = 2;
+	}else if(options.lama_service == '2'){
+		lama_service = 1;
+	}else if(options.lama_service == '3'){
+		lama_service = 6/24;
+	}
+	var date = new Date();
+	date.setDate(date.getDate() + lama_service);
+	var d = pad(date.getDate());
+  	var m = pad(date.getMonth());
+  	var y = pad(date.getFullYear());
+  	var h = pad(date.getHours());
+	var i = pad(date.getMinutes());
+	var s = pad(date.getSeconds()); console.log(d+':'+m+':'+y+' '+h+':'+i+':'+s);
+	jQuery("#datetimepicker2 input").val(d+':'+m+':'+y+' '+h+':'+i+':'+s).change();
+}
+
+function pad(n){
+	return n<10 ? '0'+(n).toString() : n;
+}
+
 jQuery('#lama-service-laundry').on('change', function(){
-	generateHarga()
+	generateHarga();
+	generateWaktuLaundry({lama_service: jQuery(this).val()});
 });
 jQuery('#tipe-laundry').on('change', function(){
-	generateHarga()
+	generateHarga();
 });
 jQuery('#berat-laundry').on('change', function(){
-	generateHarga()
+	generateHarga();
 });
 jQuery('#diskon-laundry').on('change', function(){
-	generateHarga()
+	generateHarga();
+});
+jQuery('#tambahan-harga-laundry').on('change', function(){
+	generateHarga();
 });
 function generateHarga(){
 	var _lama_service = jQuery('#lama-service-laundry').val();
 	var _tipe_laundry = jQuery('#tipe-laundry').val();
 	var _berat_laundry = jQuery('#berat-laundry').val();
 	var _diskon_laundry = jQuery('#diskon-laundry').val();
+	var _tambahan_harga_laundry = +jQuery('#tambahan-harga-laundry').val();
 	var _harga_service = 0;
 	harga_service_laundry.map(function(b, i){
 		if(
@@ -323,10 +404,10 @@ function generateHarga(){
 			}
 		}
 	});
-	total = total - _diskon;
+	total = (total - _diskon) + _tambahan_harga_laundry;
 	jQuery('#total-harga-laundry').val(total);
 	jQuery('#total-laundry').html('Rp '+total.formatMoney(0, ',', '.'));
-	console.log('total='+total+', diskon='+_diskon+', _harga_service='+_harga_service+', berat='+_berat_laundry+', tipe_laundry='+_tipe_laundry+', lama_service='+_lama_service);
+	// console.log('total='+total+', diskon='+_diskon+', _harga_service='+_harga_service+', berat='+_berat_laundry+', tipe_laundry='+_tipe_laundry+', lama_service='+_lama_service);
 }
 
 Number.prototype.formatMoney = function(c, d, t){
