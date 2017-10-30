@@ -323,7 +323,7 @@ jQuery('#datetimepicker1').datetimepicker({
 });
 var result = new Date();
 result.setDate(result.getDate() + 2);
-console.log('result', result);
+
 jQuery('#datetimepicker2').datetimepicker({
     format: 'DD-MM-YYYY HH:mm:ss',
     date: result
@@ -421,16 +421,18 @@ Number.prototype.formatMoney = function(c, d, t){
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
-var elementPosition = jQuery('#layout-transaksi-laundry').offset();
-var parent = jQuery('#layout-transaksi-laundry').parent().width();
-jQuery('#layout-transaksi-laundry').css('width', parent+'px');
-jQuery(window).scroll(function(){
-	var margin_top = 40;
-    if(jQuery(window).scrollTop() > (elementPosition.top-margin_top)){
-        jQuery('#layout-transaksi-laundry')
-        	.css('position','fixed')
-        	.css('top',margin_top);
-    } else {
-        jQuery('#layout-transaksi-laundry').css('position','static');
-    }    
-});
+if(jQuery('#layout-transaksi-laundry').length){
+	var elementPosition = jQuery('#layout-transaksi-laundry').offset();
+	var parent = jQuery('#layout-transaksi-laundry').parent().width();
+	jQuery('#layout-transaksi-laundry').css('width', parent+'px');
+	jQuery(window).scroll(function(){
+		var margin_top = 40;
+	    if(jQuery(window).scrollTop() > (elementPosition.top-margin_top)){
+	        jQuery('#layout-transaksi-laundry')
+	        	.css('position','fixed')
+	        	.css('top',margin_top);
+	    } else {
+	        jQuery('#layout-transaksi-laundry').css('position','static');
+	    }    
+	});
+}

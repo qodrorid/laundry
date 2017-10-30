@@ -25,12 +25,12 @@
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css">
 <div class="container">
 	<div class="row"><h1>Transaksi Customer Laundry</h1></div>
-	<div class="panel-group" id="accordion-laundry" role="tablist" aria-multiselectable="true">
+	<div class="panel-group row" id="accordion-laundry" role="tablist" aria-multiselectable="true">
 	  	<div class="panel panel-default">
 		    <div class="panel-heading" role="tab" id="ac-header-transkasi-laundry">
 		      	<h4 class="panel-title">
 			        <a role="button" data-toggle="collapse" data-parent="#accordion-laundry" href="#ac-transkasi-laundry" aria-expanded="true" aria-controls="ac-transkasi-laundry">
-			          Manage Transaksi Laundry
+			          Buat Transaksi Laundry
 			        </a>
 		      	</h4>
 		    </div>
@@ -188,7 +188,7 @@
 					</div>
 		      	</div>
 		    </div>
-	  	</div>
+		</div>
 	</div>
 </div>
 <?php

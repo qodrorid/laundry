@@ -666,8 +666,64 @@ function set_general_setting(){
 }
 
 function load_custom_script_admin($hook) {
+    // die($hook);
+    wp_localize_script( 'jquery', 'laundry_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) ); 
     if ( 'user-new.php' != $hook ) {
         return;
     }
     wp_enqueue_script( 'laundry_custom_script', plugin_dir_url( __FILE__ ) . '/js/global.js', array( 'jquery' ) );
+}
+
+function get_transaksi(){
+    global $wpdb;
+    $ret = array( 'error' => true );
+    $total = 0;
+    if(!empty($_POST)){
+        $total = $wpdb->get_results( 'SELECT count(id) as jml FROM '.$wpdb->prefix.'transaksi_laundry', ARRAY_A );
+        $total = $total[0]['jml'];
+        $qry = '
+            SELECT 
+                t.*, 
+                (select display_name from '.$wpdb->prefix.'users as u where u.ID=t.customer_id) as customer, 
+                (select display_name from '.$wpdb->prefix.'users as u where u.ID=t.pekerja_id) as pekerja, 
+                (select nama from '.$wpdb->prefix.'parfum_laundry as p where p.id=t.parfum_id) as parfum, 
+                (select nama from '.$wpdb->prefix.'tipe_laundry as tipe where tipe.id=t.tipe_laundry) as tipe, 
+                (select nama from '.$wpdb->prefix.'lama_service_laundry as l where l.id=t.lama_service) as lama 
+            FROM '.$wpdb->prefix.'transaksi_laundry as t
+            limit '.$_POST['start'].','.$_POST['length'];
+        $transaksi = $wpdb->get_results( $qry, ARRAY_A );
+        $no = 1;
+        foreach ($transaksi as $k => $v) {
+            $transaksi[$k]['no'] = $no;
+            $transaksi[$k]['waktu_pengerjaan'] = $v['waktu_masuk'].' - '.$v['waktu_keluar'];
+            $qry2 = 'select * from '.$wpdb->prefix.'diskon_laundry as d where d.id='.$v['diskon'];
+            $diskon = $wpdb->get_results( $qry2, ARRAY_A );
+            $transaksi[$k]['nilai_diskon'] = "-";
+            if(!empty($diskon)){
+                $transaksi[$k]['nilai_diskon'] = $diskon[0]['nilai_diskon'].' ('.$diskon[0]['keterangan'].')';
+            }
+            $transaksi[$k]['status'] = $transaksi[$k]['status'].'<br><button class="button button-primary">Edit</button>';
+            $transaksi[$k]['harga'] = buatrp($transaksi[$k]['harga']);
+            $no++;
+        }
+        $ret['data'] = $transaksi;
+        $ret['error'] = false;
+        $ret['msg'] = 'Berhasil disimpan!';
+    }
+    if($ret['error'] && empty($ret['msg'])){
+        $ret['msg'] = 'Error, harap hubungi admin!';
+    }
+    $ret = array(
+        'data'=>$transaksi,
+        "draw"=> $_POST['draw'],
+        "recordsTotal"=> $total,
+        "recordsFiltered"=> count($transaksi)
+    );
+    echo json_encode($ret);
+    wp_die();
+}
+
+function buatrp($angka){
+    $jadi = "Rp " . number_format($angka,2,',','.');
+    return $jadi;
 }
