@@ -8,3 +8,22 @@
 	text-align: center;
 	vertical-align: middle;
 }
+#customer_laundry_chosen .no-results {
+	cursor: pointer;
+	color: #000;
+}
+#customer_laundry_chosen .no-results:hover {
+	background: #3875d7;
+	color: #fff;
+}
+#view-transaksi-laundry thead th, #view-transaksi-laundry thead td {
+    padding: 5px 5px;
+    vertical-align: middle;
+    text-align: center;
+}
+#view-transaksi-laundry thead th.sorting_asc:first-child, #view-transaksi-laundry thead td.sorting_asc:first-child {
+	background-image: none;
+}
+#view-transaksi-laundry tbody td {
+    padding: 5px 5px;
+}

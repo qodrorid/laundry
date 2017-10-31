@@ -209,3 +209,238 @@ jQuery('#input-diskon-laundry').on('click', function(e){
 		}
 	})
 });
+
+jQuery('#input-transaksi-customer').on('click', function(e){
+	e.preventDefault();
+	var customer_laundry = jQuery('#customer-laundry').val();
+	if(!customer_laundry)
+		return swal({ title: 'Customer Laundry belum diisi!', type: 'error'});
+	var tipe_laundry = jQuery('#tipe-laundry').val();
+	if(!tipe_laundry)
+		return swal({ title: 'Tipe Laundry belum diisi!', type: 'error'});
+	var lama_service_laundry = jQuery('#lama-service-laundry').val();
+	if(!lama_service_laundry)
+		return swal({ title: 'Lama Service Laundry belum diisi!', type: 'error'});
+	var berat_laundry = jQuery('#berat-laundry').val();
+	if(!berat_laundry)
+		return swal({ title: 'Berat Laundry belum diisi!', type: 'error'});
+	var parfum_laundry = jQuery('#parfum-laundry').val();
+	if(!parfum_laundry)
+		return swal({ title: 'Parfum Laundry belum diisi!', type: 'error'});
+	var waktu_masuk_laundry = jQuery('#waktu-masuk-laundry').val();
+	if(!waktu_masuk_laundry)
+		return swal({ title: 'Waktu Masuk Laundry belum diisi!', type: 'error'});
+	var waktu_keluar_laundry = jQuery('#waktu-keluar-laundry').val();
+	if(!waktu_keluar_laundry)
+		return swal({ title: 'Waktu Keluar Laundry belum diisi!', type: 'error'});
+	var pekerja_laundry = jQuery('#pekerja-laundry').val();
+	if(!pekerja_laundry)
+		return swal({ title: 'Pekerja Laundry belum diisi!', type: 'error'});
+	var total_laundry = jQuery('#total-harga-laundry').val();
+	if(!total_laundry)
+		return swal({ title: 'Total Harga Laundry belum diisi!', type: 'error'});
+	var keterangan_laundry = jQuery('#keterangan-laundry').val();
+	var diskon_laundry = jQuery('#diskon-laundry').val();
+	var status_laundry = jQuery('#status-laundry').val();
+	var tambahan_harga_laundry = jQuery('#tambahan-harga-laundry').val();
+	if(total_laundry == 0)
+		return swal({ title: 'Total Harga Laundry tidak boleh 0!', type: 'error'});
+	jQuery.ajax({
+		url: ajaxurl,
+		type: 'POST',
+		data: {
+			action: 'input-transaksi-customer',
+			customer_laundry: customer_laundry,
+			tipe_laundry: tipe_laundry,
+			lama_service_laundry: lama_service_laundry,
+			berat_laundry: berat_laundry,
+			parfum_laundry: parfum_laundry,
+			waktu_masuk_laundry: waktu_masuk_laundry,
+			waktu_keluar_laundry: waktu_keluar_laundry,
+			pekerja_laundry: pekerja_laundry,
+			total_laundry: total_laundry,
+			keterangan_laundry: keterangan_laundry,
+			diskon_laundry: diskon_laundry,
+			status_laundry: status_laundry,
+			tambahan_harga_laundry: tambahan_harga_laundry
+		},
+		success: function(respone){
+			var data = JSON.parse(respone);
+			if(data.error){
+				swal({ title: data.msg, type: 'error' });
+			}else{
+				swal({ title: data.msg, type: 'success' });
+			}
+		}
+	})
+});
+
+jQuery('#input-general-setting-laundry').on('click', function(e){
+	e.preventDefault();
+	var lama_laundry = jQuery('#default-lama-laundry').val();
+	if(!lama_laundry)
+		return swal({ title: 'Lama Laundry belum dipilih!', type: 'error'});
+	var default_tipe_laundry = jQuery('#default-tipe-laundry').val();
+	if(!default_tipe_laundry)
+		return swal({ title: 'Tipe Laundry belum dipilih!', type: 'error'});
+	var default_parfum_laundry = jQuery('#default-parfum-laundry').val();
+	if(!default_parfum_laundry)
+		return swal({ title: 'Parfum Laundry belum dipilih!', type: 'error'});
+	jQuery.ajax({
+		url: ajaxurl,
+		type: 'POST',
+		data: {
+			action: 'set-general-setting',
+			lama_laundry: lama_laundry,
+			default_tipe_laundry: default_tipe_laundry,
+			default_parfum_laundry: default_parfum_laundry,
+		},
+		success: function(respone){
+			var data = JSON.parse(respone);
+			if(data.error){
+				swal({ title: data.msg, type: 'error' });
+			}else{
+				swal({ title: data.msg, type: 'success' });
+			}
+		}
+	})
+});
+
+jQuery('#customer-laundry').chosen({
+	width: '100%',
+	no_results_text: 'Tidak ditemukan. Klik di sini untuk membuat data customer '
+});
+jQuery('body').on('click', '#customer_laundry_chosen .no-results', function(){
+	var text = jQuery(this).closest('.chosen-drop').find('.chosen-search input').val();
+	window.location = add_new_user+'?username='+encodeURIComponent(text);
+});
+
+jQuery('#pekerja-laundry').chosen({ width: '100%' });
+
+jQuery('#datetimepicker1').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+    date: new Date()
+});
+var result = new Date();
+result.setDate(result.getDate() + 2);
+
+jQuery('#datetimepicker2').datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+    date: result
+});
+
+function generateWaktuLaundry(options){
+	var date = new Date();
+	var d = pad(date.getDate());
+  	var m = pad(date.getMonth());
+  	var y = pad(date.getFullYear());
+  	var h = pad(date.getHours());
+	var i = pad(date.getMinutes());
+	var s = pad(date.getSeconds());
+	jQuery("#datetimepicker1 input").val(d+':'+m+':'+y+' '+h+':'+i+':'+s).change();
+
+	var lama_service = 2;
+	if(options.lama_service == '1'){
+		lama_service = 2;
+	}else if(options.lama_service == '2'){
+		lama_service = 1;
+	}else if(options.lama_service == '3'){
+		lama_service = 6/24;
+	}
+	var date = new Date();
+	date.setDate(date.getDate() + lama_service);
+	var d = pad(date.getDate());
+  	var m = pad(date.getMonth());
+  	var y = pad(date.getFullYear());
+  	var h = pad(date.getHours());
+	var i = pad(date.getMinutes());
+	var s = pad(date.getSeconds()); console.log(d+':'+m+':'+y+' '+h+':'+i+':'+s);
+	jQuery("#datetimepicker2 input").val(d+':'+m+':'+y+' '+h+':'+i+':'+s).change();
+}
+
+function pad(n){
+	return n<10 ? '0'+(n).toString() : n;
+}
+
+jQuery('#lama-service-laundry').on('change', function(){
+	generateHarga();
+	generateWaktuLaundry({lama_service: jQuery(this).val()});
+});
+jQuery('#tipe-laundry').on('change', function(){
+	generateHarga();
+});
+jQuery('#berat-laundry').on('change', function(){
+	generateHarga();
+});
+jQuery('#diskon-laundry').on('change', function(){
+	generateHarga();
+});
+jQuery('#tambahan-harga-laundry').on('change', function(){
+	generateHarga();
+});
+function generateHarga(){
+	var _lama_service = jQuery('#lama-service-laundry').val();
+	var _tipe_laundry = jQuery('#tipe-laundry').val();
+	var _berat_laundry = jQuery('#berat-laundry').val();
+	var _diskon_laundry = jQuery('#diskon-laundry').val();
+	var _tambahan_harga_laundry = +jQuery('#tambahan-harga-laundry').val();
+	var _harga_service = 0;
+	harga_service_laundry.map(function(b, i){
+		if(
+			b.lama_service == _lama_service
+			&& b.tipe_laundry == _tipe_laundry
+		){
+			_harga_service = b.harga;
+		}
+	});
+	var total = _berat_laundry * _harga_service;
+	var _diskon = 0;
+	diskon_laundry.map(function(b, i){
+		if(b.id == _diskon_laundry){
+			if(b.tipe == 'persen'){
+				_diskon = (total * b.nilai_diskon) / 100;
+			}else if(b.tipe == 'potongan'){
+				_diskon = b.nilai_diskon;
+			}
+		}
+	});
+	total = (total - _diskon) + _tambahan_harga_laundry;
+	jQuery('#total-harga-laundry').val(total);
+	jQuery('#total-laundry').html('Rp '+total.formatMoney(0, ',', '.'));
+	// console.log('total='+total+', diskon='+_diskon+', _harga_service='+_harga_service+', berat='+_berat_laundry+', tipe_laundry='+_tipe_laundry+', lama_service='+_lama_service);
+}
+
+Number.prototype.formatMoney = function(c, d, t){
+    var n = this,
+        c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? "." : d,
+        t = t == undefined ? "," : t,
+        s = n < 0 ? "-" : "",
+        i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};
+
+if(jQuery('#layout-transaksi-laundry').length){
+	var elementPosition = jQuery('#layout-transaksi-laundry').offset();
+	var parent = jQuery('#layout-transaksi-laundry').parent().width();
+	jQuery('#layout-transaksi-laundry').css('width', parent+'px');
+	jQuery(window).scroll(function(){
+		var margin_top = 40;
+	    if(jQuery(window).scrollTop() > (elementPosition.top-margin_top)){
+	        jQuery('#layout-transaksi-laundry')
+	        	.css('position','fixed')
+	        	.css('top',margin_top);
+	    } else {
+	        jQuery('#layout-transaksi-laundry').css('position','static');
+	    }    
+	});
+}
+
+function update_status_laundry(){
+	jQuery('#modal-laporan').modal('show');
+}
+
+function save_edit_transaksi(){
+	
+}
