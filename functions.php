@@ -667,7 +667,21 @@ function set_general_setting(){
 
 function load_custom_script_admin($hook) {
     // die($hook);
+    wp_enqueue_style( 'min-bootstrap', plugin_dir_url( __FILE__ ).'/css/bootstrap.min.css' ); 
+    wp_enqueue_style( 'sweetalert', plugin_dir_url( __FILE__ ).'/css/sweetalert.css' ); 
+    wp_enqueue_style( 'chosen', plugin_dir_url( __FILE__ ).'/css/chosen.css' ); 
+    wp_enqueue_style( 'jquery-dataTables-min', plugin_dir_url( __FILE__ ).'/css/jquery.dataTables.min.css' ); 
+    wp_enqueue_style( 'bootstrap-datetimepicker-min', plugin_dir_url( __FILE__ ).'/css/bootstrap-datetimepicker.min.css' ); 
+    wp_enqueue_style( 'custom-laundry', plugin_dir_url( __FILE__ ).'/css/custom.css' ); 
     wp_localize_script( 'jquery', 'laundry_config', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) ); 
+    
+    wp_enqueue_script( 'bootstrap-min', plugin_dir_url( __FILE__ ) . '/js/bootstrap.min.js', array( 'jquery' ) );
+    wp_enqueue_script( 'sweetalert', plugin_dir_url( __FILE__ ) . '/js/sweetalert.js', array( 'jquery' ) );
+    wp_enqueue_script( 'chosen-jquery-min', plugin_dir_url( __FILE__ ) . '/js/chosen.jquery.min.js', array( 'jquery' ) );
+    wp_enqueue_script( 'jquery-dataTables-min', plugin_dir_url( __FILE__ ) . '/js/jquery.dataTables.min.js', array( 'jquery' ) );
+    wp_enqueue_script( 'moment-min', plugin_dir_url( __FILE__ ) . '/js/moment.min.js', array( 'jquery' ) );
+    wp_enqueue_script( 'bootstrap-datetimepicker-min', plugin_dir_url( __FILE__ ) . '/js/bootstrap-datetimepicker.min.js', array( 'jquery' ) );
+    wp_enqueue_script( 'custom-laundry', plugin_dir_url( __FILE__ ) . '/js/custom.js', array( 'jquery' ) );
     if ( 'user-new.php' != $hook ) {
         return;
     }
@@ -702,7 +716,7 @@ function get_transaksi(){
             if(!empty($diskon)){
                 $transaksi[$k]['nilai_diskon'] = $diskon[0]['nilai_diskon'].' ('.$diskon[0]['keterangan'].')';
             }
-            $transaksi[$k]['status'] = $transaksi[$k]['status'].'<br><button class="button button-primary">Edit</button>';
+            $transaksi[$k]['status'] = $transaksi[$k]['status'].'<br><button class="button button-primary" onclick="update_status_laundry();">Edit</button>';
             $transaksi[$k]['harga'] = buatrp($transaksi[$k]['harga']);
             $no++;
         }
@@ -724,6 +738,6 @@ function get_transaksi(){
 }
 
 function buatrp($angka){
-    $jadi = "Rp " . number_format($angka,2,',','.');
+    $jadi = number_format($angka,2,',','.');
     return $jadi;
 }

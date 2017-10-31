@@ -5,13 +5,6 @@
 	}
 	global $wpdb;
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/chosen.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/chosen.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css">
 <div class="container">
 	<div class="row"><h1>Laporan Laundry</h1></div>
 	<div class="panel-group row" id="accordion-laundry" role="tablist" aria-multiselectable="true">
@@ -59,13 +52,6 @@
 	  	</div>
 	</div>
 </div>
-<script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/sweetalert.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/chosen.jquery.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/moment.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/custom.js"></script>
 <script type="text/javascript">
 	var options = {
 		"bDestroy": true,
@@ -126,3 +112,20 @@
 		jQuery('#view-transaksi-laundry').dataTable(options);	
 	});
 </script>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-laporan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Transaksi</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="save_edit_transaksi();">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

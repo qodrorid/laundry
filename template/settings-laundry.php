@@ -12,9 +12,6 @@
 	$default_tipe_laundry = get_option('tipe_laundry', false);
 	$default_parfum_laundry = get_option('parfum_laundry', false);
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css"/>
 <div class="container">
 	<div class="row"><h1>Settings Laundry</h1></div>
 	<div class="panel-group" id="accordion-laundry" role="tablist" aria-multiselectable="true">
@@ -189,7 +186,3 @@
 	  	</div>
 	</div>
 </div>
-
-<script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/sweetalert.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/custom.js"></script>

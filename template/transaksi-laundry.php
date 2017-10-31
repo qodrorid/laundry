@@ -16,13 +16,6 @@
 	$default_parfum_laundry = get_option('parfum_laundry', false);
     // echo "<pre>".print_r($tipe, 1)."</pre>";
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/chosen.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/chosen.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css">
 <div class="container">
 	<div class="row"><h1>Transaksi Customer Laundry</h1></div>
 	<div class="panel-group row" id="accordion-laundry" role="tablist" aria-multiselectable="true">
@@ -200,10 +193,3 @@
 	var harga_service_laundry = <?php echo json_encode($harga_service_laundry); ?>;
 	var add_new_user = "<?php echo get_admin_url(); ?>user-new.php";
 </script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/sweetalert.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/chosen.jquery.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/moment.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/custom.js"></script>

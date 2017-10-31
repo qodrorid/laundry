@@ -436,3 +436,11 @@ if(jQuery('#layout-transaksi-laundry').length){
 	    }    
 	});
 }
+
+function update_status_laundry(){
+	jQuery('#modal-laporan').modal('show');
+}
+
+function save_edit_transaksi(){
+	
+}

@@ -11,9 +11,6 @@
 	$persentase_laundry = $wpdb->get_results( 'SELECT * FROM '.$wpdb->prefix.'persentase_laundry', ARRAY_A );
 	$bagi_hasil = get_option('rumus_dasar_bagi_hasil');
 ?>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('laundry'); ?>/css/custom.css">
 <div class="container">
 	<div class="row"><h1>Harga Laundry</h1></div>
 	<div class="panel-group" id="accordion-laundry" role="tablist" aria-multiselectable="true">
@@ -381,7 +378,3 @@
 	?>
 	</div>
 </div>
-
-<script src="<?php echo plugins_url('laundry'); ?>/js/bootstrap.min.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/sweetalert.js"></script>
-<script src="<?php echo plugins_url('laundry'); ?>/js/harga-laundry.js"></script>
